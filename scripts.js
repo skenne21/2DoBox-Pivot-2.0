@@ -4,6 +4,9 @@ var $saveBtn = $('#save-btn');
 var $appendHere = $('.append-here');
 var $deleteBtn = $('#delete-btn');
 
+
+// changed input-title and  body from id to classes, check how the are getting inputs?
+
 function NewCard (title, body, id, quality){
   this.title = title;
   this.body = body;

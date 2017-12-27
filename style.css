@@ -1,10 +1,12 @@
 @import 'reset.css';
 
+
+/*get rid of hr add border bottom to article*/
 html {
   font-size: 10px;
 }
 
-.header {
+header{
   font-family: 'Roboto Slab', serif;
   text-align: center;
   background-color: #E5F3F2;
@@ -34,7 +36,7 @@ p {
   line-height: 3.4rem;
 }
 
-#header-box {
+.logo-style {
   color: #6D6E71;
 }
 
@@ -194,7 +196,7 @@ hr {
     width: 80%;
   }
 
-  #input-body {
+  .input-body {
     height: 15rem;
     text-align: left;
   }
