@@ -1,8 +1,15 @@
-var $titleInput = $('#input-title');
-var $bodyInput = $('#input-body');
-var $saveBtn = $('#save-btn');
-var $appendHere = $('.append-here');
-var $deleteBtn = $('#delete-btn');
+$('#save-btn').on('click', userData);
+$('.input-body').on('keyup', enableBtn);
+$('.input-title').on('keyup', enableBtn);
+$('.append-here').on('click', '#delete-btn', removeCard);
+$('.append-here').on('click', '#upvote-btn', changeUpvote);
+$('.append-here').on('click', '#downvote-btn', changeDownvote);
+$('.append-here').on('blur', 'p', editTask);
+$('.append-here').on('blur', 'h3', editTitle);
+$(document).ready(getCardFromStoreage);
+
+
+
 
 
 // changed input-title and  body from id to classes, check how the are getting inputs?
@@ -14,36 +21,54 @@ function NewCard (title, body, id, quality){
   this.quality = quality || ' swill';
 }
 
-NewCard.prototype.prependCard = function() {
-   $appendHere.prepend(`<article class="cards" id="${this.id}">
-    <button class="top-card card-button" id="delete-btn"></button>
-    <h3 class="top-card" contenteditable=true>${this.title}</h3>
-    <p contenteditable=true>${this.body}</p>
-    <button class="card-button bottom-line" id="upvote-btn"></button>
-    <button class="card-button bottom-line" id="downvote-btn"></button>
-    <h6 class="bottom-line">quality:<span class="quality-change">${this.quality}</span></h6>
-    <hr>
-    </article>`);
+function enableBtn() {
+  var titleInput = $('.input-title');
+  var bodyInput = $('.input-body');
+  if (titleInput.val()  && bodyInput.val()){
+    $('#save-btn').attr('disabled', false);
+  } else {
+    $('#save-btn').text('Please Fill Out Both Inputs');
+    setTimeout(function(){$('#save-btn').text('Save');}, 2000);
+    $('#save-btn').attr('disabled', true);  
+  }
+}
+
+function userData(event) {
+  event.preventDefault();
+  var $titleInput = $('.input-title').val();
+  var $bodyInput = $('.input-body').val();
+  var id = Date.now();
+  var card = new NewCard ($titleInput, $bodyInput, id);
+  secondaryFunctions(card);
 };
 
-$saveBtn.on('click', function(event){
-  event.preventDefault();
-  var id = Date.now();
-  var card = new NewCard ($titleInput.val(), $bodyInput.val(), id);
+function secondaryFunctions(card) {
   card.prependCard();
-  $titleInput.val("");
-  $bodyInput.val("");
   storeCard(card);
-});
+  $('.input-title').val('');
+  $('.input-body').val('');
+  $('#save-btn').attr('disabled', true);
+};
+
+NewCard.prototype.prependCard = function() {
+   $('.append-here').prepend(`
+    <article class="cards" id="${this.id}">
+      <button class="top-card card-button" id="delete-btn"></button>
+      <h3 class="top-card" contenteditable=true>${this.title}</h3>
+      <p contenteditable=true>${this.body}</p>
+      <button class="card-button bottom-line" id="upvote-btn"></button>
+      <button class="card-button bottom-line" id="downvote-btn"></button>
+      <h6 class="bottom-line">quality:<span class="quality-change">${this.quality}</span></h6>
+      <hr>
+    </article>`);
+};
 
 function storeCard(card){
   var stringifiedCard = JSON.stringify(card);
   localStorage.setItem(card.id, stringifiedCard);
 }
-
-$(document).ready(getCard);
   
-function getCard(){
+function getCardFromStoreage(){
   for(var i = 0; i < localStorage.length; i++){
   var retrieveCard = localStorage.getItem(localStorage.key(i));
   var parseCard = JSON.parse(retrieveCard);
@@ -52,45 +77,56 @@ function getCard(){
   }
 }
 
-$appendHere.on('click', '#delete-btn', function(event) {
+function removeCard() {
   var idRemoved = $(this).parent().attr('id');
   $(this).parent().remove();
   localStorage.removeItem(idRemoved);
-});
+}
 
-$appendHere.on('click', '#upvote-btn', function(event) { 
-  var cardId = $(this).parent().attr('id');
-  var storedId = localStorage.getItem(cardId);
-  var parseId = JSON.parse(storedId);
+
+function changeUpvote() {
+  var key = $(this).parent().attr('id');
+  var retrieveObject = localStorage.getItem(key);
+  var parseObject = JSON.parse(retrieveObject);
   var htmlText = $(this).siblings('h6').children('span');
   if(htmlText.text() === ' swill') {
     htmlText.text(' plausible');
-    parseId.quality = ' plausible';
-  } else if(htmlText.text() === ' plausible') {
+    parseObject.quality = ' plausible';
+    var stringifyObject = JSON.stringify(parseObject);
+    localStorage.setItem(key, stringifyObject);
+    } else if(htmlText.text() === ' plausible') {
     htmlText.text(' genius');
-    parseId.quality = 'genius';
+    parseObject.quality = 'genius';
+    var stringifyObject = JSON.stringify(parseObject);
+    localStorage.setItem(key, stringifyObject);
   };
-  var stringedId = JSON.stringify(parseId);
-  localStorage.setItem(cardId, stringedId);
-});
+};
 
-$appendHere.on('click', '#downvote-btn', function(event) { 
-  var cardId = $(this).parent().attr('id');
-  var storedId = localStorage.getItem(cardId);
-  var parseId = JSON.parse(storedId);
+
+function changeDownvote() {
+  console.log(this)
+  var key = $(this).parent().attr('id');
+  var retrieveObject = localStorage.getItem(key);
+  var parseObject = JSON.parse(retrieveObject);
   var htmlText = $(this).siblings('h6').children('span');
-  if(htmlText.text() === ' genius') {
+  if(htmlText.text() === 'genius') {
     htmlText.text(' plausible');
-    parseId.quality = ' plausible';
+    parseObject.quality = ' plausible';
+    var stringifyObject = JSON.stringify(parseObject);
+    localStorage.setItem(key, stringifyObject);
   } else if(htmlText.text() === ' plausible') {
     htmlText.text(' swill');
-    parseId.quality = 'swill';
+    parseObject.quality = 'swill';
+    var stringifyObject = JSON.stringify(parseObject);
+    console.log(stringifyObject)
+    localStorage.setItem(key, stringifyObject)
   };
-  var stringedId = JSON.stringify(parseId);
-  localStorage.setItem(cardId, stringedId);
-});
+};
 
-$appendHere.on('blur', 'h3', function() {
+// downvote and upvote dont work when refreshed, cant figure out why
+
+
+function editTitle() {
   var cardId = $(this).parent().attr('id');
   var storedId = localStorage.getItem(cardId);
   var parseObject = JSON.parse(storedId);
@@ -98,9 +134,10 @@ $appendHere.on('blur', 'h3', function() {
   parseObject.title = titleText;
   var stringTitle = JSON.stringify(parseObject);
   localStorage.setItem(cardId, stringTitle);
-});
+};
 
-$appendHere.on('blur', 'p', function (){
+
+function editTask() {
   var cardId = $(this).parent().attr('id');
   var storedId = localStorage.getItem(cardId);
   var parseObject = JSON.parse(storedId);
@@ -108,8 +145,7 @@ $appendHere.on('blur', 'p', function (){
   parseObject.body = paraObject;
   var stringBody = JSON.stringify(parseObject);
   localStorage.setItem(cardId, stringBody);
-});
-
+};
 
 
 
