@@ -145,6 +145,11 @@ hr {
   border-color: #d1d3d4;
 }
 
+
+.hidden {
+  display: none
+}
+
 @media screen and (max-width: 1600px) {
 
   #save-btn {

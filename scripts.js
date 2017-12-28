@@ -2,10 +2,11 @@ $('#save-btn').on('click', userData);
 $('.input-body').on('keyup', enableBtn);
 $('.input-title').on('keyup', enableBtn);
 $('.append-here').on('click', '#delete-btn', removeCard);
-$('.append-here').on('click', '#upvote-btn', changeUpvote);
-$('.append-here').on('click', '#downvote-btn', changeDownvote);
+$('.append-here').on('click', '#upvote-btn', setQuality);
+$('.append-here').on('click', '#downvote-btn', setQuality);
 $('.append-here').on('blur', 'p', editTask);
 $('.append-here').on('blur', 'h3', editTitle);
+$('#search-field').on('keyup', searchCards)
 $(document).ready(getCardFromStoreage);
 
 
@@ -19,6 +20,7 @@ function NewCard (title, body, id, quality){
   this.body = body;
   this.id = id;
   this.quality = quality || ' swill';
+  this.voteCounter = 0; 
 }
 
 function enableBtn() {
@@ -84,6 +86,22 @@ function removeCard() {
 }
 
 
+function setQuality() {
+  var key = $(this).parent().attr('id');
+  var retrieveObject = localStorage.getItem(key);
+  var parseObject = JSON.parse(retrieveObject);
+  if( event.target.id === 'upvote-btn' && parseObject.voteCounter < 3){
+    parseObject.voteCounter++;
+    console.log(parseObject.voteCounter)
+  }
+  // var qualityText = $(this).siblings('h6').children('span').text();
+  // var qualityArray = ['swill', 'plausible', 'genius'];
+  // var button = $(this);
+  // changeQuality(button, parseObject, qualityArray, qualityText);
+}
+
+
+
 function changeUpvote() {
   var key = $(this).parent().attr('id');
   var retrieveObject = localStorage.getItem(key);
@@ -145,6 +163,19 @@ function editTask() {
   parseObject.body = paraObject;
   var stringBody = JSON.stringify(parseObject);
   localStorage.setItem(cardId, stringBody);
+};
+
+function searchCards() {
+  $('.cards').addClass('hidden');
+  for (var i = 0; i <localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var pulledObject = localStorage.getItem(key);
+    var parseObject = JSON.parse(pulledObject);
+    if (parseObject.title.includes($(this).val()) || parseObject.body.includes($(this).val())) {
+      var cardId = '#' + parseObject.id;
+      $(cardId).removeClass('hidden');
+    };
+  };
 };
 
 
