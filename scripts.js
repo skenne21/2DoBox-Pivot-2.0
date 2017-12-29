@@ -1,24 +1,28 @@
 $('#save-btn').on('click', userData);
-$('.input-body').on('keyup', enableBtn);
+$('.input-task').on('keyup', enableBtn);
 $('.input-title').on('keyup', enableBtn);
 $('.append-here').on('click', '#delete-btn', removeCard);
-$('.append-here').on('click', '#upvote-btn', setQuality);
-$('.append-here').on('click', '#downvote-btn', setQuality);
+// $('.append-here').on('click', '#upvote-btn', setQuality);
+// $('.append-here').on('click', '#downvote-btn', setQuality);
 $('.append-here').on('blur', 'p', editTask);
 $('.append-here').on('blur', 'h3', editTitle);
 $('#search-field').on('keyup', searchCards)
 $(document).ready(getCardFromStoreage);
+$('.append-here').on('click', '.completed-btn', toggleCompletedAppearance);
+$('.append-here').on('click', '.completed-btn', completedValue);
 
-function NewCard (title, task, id, quality){
+
+function NewCard (title, task, id, quality, completed){
   this.title = title;
   this.task = task;
   this.id = id;
   this.quality = quality || ' swill';
   this.voteCounter = 0; 
+  this.completed = false;
 }
 
 NewCard.prototype.prependCard = function() {
-   $appendHere.prepend(`<article class="cards" id="${this.id}">
+   $('.append-here').prepend(`<article class="cards" id="${this.id}">
     <button class="top-card card-button" id="delete-btn"></button>
     <h3 class="top-card" contenteditable=true>${this.title}</h3>
     <p contenteditable=true>${this.task}</p>
@@ -46,10 +50,7 @@ function userData(event) {
   var $titleInput = $('.input-title').val();
   var $taskInput = $('.input-task').val();
   var id = Date.now();
-  var card = new NewCard ($titleInput.val(), $taskInput.val(), id);
-  card.prependCard();
-  $titleInput.val("");
-  $taskInput.val("");
+  // var completed = 'notCompleted';
   var card = new NewCard ($titleInput, $taskInput, id);
   secondaryFunctions(card);
 };
@@ -62,30 +63,19 @@ function secondaryFunctions(card) {
   $('#save-btn').attr('disabled', true);
 };
 
-NewCard.prototype.prependCard = function() {
-   $('.append-here').prepend(`
-    <article class="cards" id="${this.id}">
-      <button class="top-card card-button" id="delete-btn"></button>
-      <h3 class="top-card" contenteditable=true>${this.title}</h3>
-      <p contenteditable=true>${this.task}</p>
-      <button class="card-button bottom-line" id="upvote-btn"></button>
-      <button class="card-button bottom-line" id="downvote-btn"></button>
-      <h6 class="bottom-line">quality:<span class="quality-change">${this.quality}</span></h6>
-      <hr>
-    </article>`);
-};
-
-function storeCard(card){
+function storeCard(card) {
   var stringifiedCard = JSON.stringify(card);
   localStorage.setItem(card.id, stringifiedCard);
 }
   
-function getCardFromStoreage(){
+function getCardFromStoreage() {
   for(var i = 0; i < localStorage.length; i++){
   var retrieveCard = localStorage.getItem(localStorage.key(i));
-  var parseCard = JSON.parse(retrieveCard);
-  var refreshCard = new NewCard (parseCard.title, parseCard.task, parseCard.id, parseCard.quality);
-  refreshCard.prependCard()
+  var parsedCard = JSON.parse(retrieveCard);
+  if (parsedCard.completed === false) {
+    var refreshCard = new NewCard (parsedCard.title, parsedCard.task, parsedCard.id, parsedCard.quality);
+    refreshCard.prependCard();
+    }
   }
 }
 
@@ -95,19 +85,19 @@ function removeCard() {
   localStorage.removeItem(idRemoved);
 }
 
-function setQuality() {
-  var key = $(this).parent().attr('id');
-  var retrieveObject = localStorage.getItem(key);
-  var parseObject = JSON.parse(retrieveObject);
-  if( event.target.id === 'upvote-btn' && parseObject.voteCounter < 3){
-    parseObject.voteCounter++;
-    console.log(parseObject.voteCounter)
-  }
+// function setQuality() {
+//   var key = $(this).parent().attr('id');
+//   var retrieveObject = localStorage.getItem(key);
+//   var parseObject = JSON.parse(retrieveObject);
+//   if( event.target.id === 'upvote-btn' && parseObject.voteCounter < 3){
+//     parseObject.voteCounter++;
+//     console.log(parseObject.voteCounter)
+//   }
   // var qualityText = $(this).siblings('h6').children('span').text();
   // var qualityArray = ['swill', 'plausible', 'genius'];
   // var button = $(this);
   // changeQuality(button, parseObject, qualityArray, qualityText);
-}
+// }
 
 function changeUpvote() {
   var key = $(this).parent().attr('id');
@@ -147,8 +137,6 @@ function changeDownvote() {
   };
 };
 
-// downvote and upvote dont work when refreshed, cant figure out why
-
 function editTitle() {
   var cardId = $(this).parent().attr('id');
   var storedId = localStorage.getItem(cardId);
@@ -163,8 +151,8 @@ function editTask() {
   var cardId = $(this).parent().attr('id');
   var storedId = localStorage.getItem(cardId);
   var parseObject = JSON.parse(storedId);
-  var paraObject = $(this).text();
-  parseObject.task = paraObject;
+  var taskText = $(this).text();
+  parseObject.task = taskText;
   var stringTask = JSON.stringify(parseObject);
   localStorage.setItem(cardId, stringTask);
 };
@@ -175,9 +163,32 @@ function searchCards() {
     var key = localStorage.key(i);
     var pulledObject = localStorage.getItem(key);
     var parseObject = JSON.parse(pulledObject);
-    if (parseObject.title.includes($(this).val()) || parseObject.body.includes($(this).val())) {
+    if (parseObject.title.includes($(this).val()) || parseObject.task.includes($(this).val())) {
       var cardId = '#' + parseObject.id;
       $(cardId).removeClass('hidden');
     };
   };
 };
+
+function toggleCompletedAppearance() {
+  $(this).closest('article').toggleClass('completed-card');
+  $(this).closest('article').find('button').toggleClass('completed-card-buttons');
+ }
+
+function completedValue() {
+  var cardId = $(this).parent().attr('id');
+  var storedId = localStorage.getItem(cardId);
+  var parseObject = JSON.parse(storedId);
+  if($(this).closest('article').hasClass('completed-card') === true) {
+    parseObject.completed = true;
+    var stringTask = JSON.stringify(parseObject);
+    localStorage.setItem(cardId, stringTask);
+  } else {
+    parseObject.completed = false;
+    var stringTask = JSON.stringify(parseObject);
+    localStorage.setItem(cardId, stringTask);
+  }
+}
+
+// function showCompleted()
+
