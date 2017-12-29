@@ -227,6 +227,11 @@ p {
   position: absolute;
 }
 
+
+.hidden {
+  display: none
+}
+
 @media screen and (max-width: 1600px) {
 
   #save-btn {
