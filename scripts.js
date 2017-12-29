@@ -10,7 +10,7 @@ $('#search-field').on('keyup', searchCards)
 $(document).ready(getCardFromStoreage);
 $('.append-here').on('click', '.completed-btn', toggleCompletedAppearance);
 $('.append-here').on('click', '.completed-btn', completedValue);
-
+$('.completed-tasks').on('click', showCompleted);
 
 function NewCard (title, task, id, quality, completed){
   this.title = title;
@@ -190,5 +190,15 @@ function completedValue() {
   }
 }
 
-// function showCompleted()
+function showCompleted() {
+  $('.cards').addClass('hidden');
+  for(var i = 0; i < localStorage.length; i++){
+  var retrieveCard = localStorage.getItem(localStorage.key(i));
+  var parsedCard = JSON.parse(retrieveCard);
+  if(parsedCard.completed === true) {
+    // $('.cards').toggleClass('.completed-card');
+    var refreshCard = new NewCard (parsedCard.title, parsedCard.task, parsedCard.id, parsedCard.quality);
+    refreshCard.prependCard();
+  }
+}}
 
