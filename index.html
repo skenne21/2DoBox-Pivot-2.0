@@ -3,22 +3,34 @@
   <head>
     <title>2DoBox</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="reset.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   </head>
   <body>
     <header>
-      <h1>2Do<span class="logo-style">Box</span></h1>  
+      <h1>2Do<span class="logo-style">Box</span></h1>
       <form>
-        <input type="text" name="title" placeholder="Title" class="input-boxes input-title" aria-labelledby="title">
-        <input type="text" name="body" placeholder="Body" class="input-boxes input-body" aria-labelledby="body">
-        <button class="input-boxes" id="save-btn" disabled>Save</button>
+        <input class="input-boxes input-title" type="text" name="title" placeholder="Title" aria-labelledby="title">
+        <input class="input-boxes input-task" type="text" name="task" placeholder="Task" aria-labelledby="task">
+        <button class="input-boxes" id="save-btn">Save</button>
       </form>
     </header>
     <main class="body">
       <input type="search" name="search" placeholder="Search" id="search-field">
+      <article class="filter-buttons">
+        <button class="filter-quality critical-btn">Critical</button>
+        <button class="filter-quality high-btn">High</button>
+        <button class="filter-quality normal-btn">Normal</button>
+        <button class="filter-quality low-btn">Low</button>
+        <button class="filter-quality none-btn">None</button>
+      </article>
       <section class="append-here"></section>
+      <article class="bottom-btns">
+        <button class="bottom-btn more-tasks">Show More Tasks</button>
+        <button class="bottom-btn completed-tasks">Show Completed Tasks</button>
+      </article>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="jquery-3.2.1.min.js"><\/script>')</script>
