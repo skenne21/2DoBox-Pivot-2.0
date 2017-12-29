@@ -7,10 +7,11 @@ $('.append-here').on('click', '#delete-btn', removeCard);
 $('.append-here').on('blur', 'p', editTask);
 $('.append-here').on('blur', 'h3', editTitle);
 $('#search-field').on('keyup', searchCards)
-$(document).ready(getCardFromStoreage);
+$(document).ready(displayTen);
 $('.append-here').on('click', '.completed-btn', toggleCompletedAppearance);
 $('.append-here').on('click', '.completed-btn', completedValue);
 $('.completed-tasks').on('click', showCompleted);
+$('.more-tasks').on('click', getCardFromStoreage);
 
 function NewCard (title, task, id, quality, completed){
   this.title = title;
@@ -69,6 +70,7 @@ function storeCard(card) {
 }
   
 function getCardFromStoreage() {
+  $('.cards').addClass('hidden');
   for(var i = 0; i < localStorage.length; i++){
   var retrieveCard = localStorage.getItem(localStorage.key(i));
   var parsedCard = JSON.parse(retrieveCard);
@@ -202,3 +204,18 @@ function showCompleted() {
   }
 }}
 
+function displayTen() {
+  var newArray = [];  
+    for(var i = 0; i < localStorage.length; i++){
+    newArray.push(localStorage.key(i));
+    var sortedArray = newArray.sort(function(a, b) {
+     return a - b;
+    });
+    var retrieveCard = localStorage.getItem(localStorage.key(i));
+    var parsedCard = JSON.parse(retrieveCard);
+    if (newArray.length <= 10 && parsedCard.completed === false){
+    var refreshCard = new NewCard (parsedCard.title, parsedCard.task, parsedCard.id, parsedCard.quality);
+    refreshCard.prependCard();
+    }
+  }
+}
