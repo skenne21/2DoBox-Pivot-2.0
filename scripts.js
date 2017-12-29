@@ -1,5 +1,5 @@
-var $titleInput = $('#input-title');
-var $bodyInput = $('#input-body');
+var $titleInput = $('.input-title');
+var $taskInput = $('.input-task');
 var $saveBtn = $('#save-btn');
 var $appendHere = $('.append-here');
 var $deleteBtn = $('#delete-btn');
@@ -7,9 +7,9 @@ var $deleteBtn = $('#delete-btn');
 
 // changed input-title and  body from id to classes, check how the are getting inputs?
 
-function NewCard (title, body, id, quality){
+function NewCard (title, task, id, quality){
   this.title = title;
-  this.body = body;
+  this.task = task;
   this.id = id;
   this.quality = quality || ' swill';
 }
@@ -18,21 +18,21 @@ NewCard.prototype.prependCard = function() {
    $appendHere.prepend(`<article class="cards" id="${this.id}">
     <button class="top-card card-button" id="delete-btn"></button>
     <h3 class="top-card" contenteditable=true>${this.title}</h3>
-    <p contenteditable=true>${this.body}</p>
+    <p contenteditable=true>${this.task}</p>
     <button class="card-button bottom-line" id="upvote-btn"></button>
     <button class="card-button bottom-line" id="downvote-btn"></button>
-    <h6 class="bottom-line">quality:<span class="quality-change">${this.quality}</span></h6>
-    <hr>
+    <h6 class="bottom-line">quality: <span class="quality-change">${this.quality}</span></h6>
+    <button class="completed-btn">Mark as Completed</button>
     </article>`);
 };
 
 $saveBtn.on('click', function(event){
   event.preventDefault();
   var id = Date.now();
-  var card = new NewCard ($titleInput.val(), $bodyInput.val(), id);
+  var card = new NewCard ($titleInput.val(), $taskInput.val(), id);
   card.prependCard();
   $titleInput.val("");
-  $bodyInput.val("");
+  $taskInput.val("");
   storeCard(card);
 });
 
@@ -47,7 +47,7 @@ function getCard(){
   for(var i = 0; i < localStorage.length; i++){
   var retrieveCard = localStorage.getItem(localStorage.key(i));
   var parseCard = JSON.parse(retrieveCard);
-  var refreshCard = new NewCard (parseCard.title, parseCard.body, parseCard.id, parseCard.quality);
+  var refreshCard = new NewCard (parseCard.title, parseCard.task, parseCard.id, parseCard.quality);
   refreshCard.prependCard()
   }
 }
@@ -105,9 +105,9 @@ $appendHere.on('blur', 'p', function (){
   var storedId = localStorage.getItem(cardId);
   var parseObject = JSON.parse(storedId);
   var paraObject = $(this).text();
-  parseObject.body = paraObject;
-  var stringBody = JSON.stringify(parseObject);
-  localStorage.setItem(cardId, stringBody);
+  parseObject.task = paraObject;
+  var stringTask = JSON.stringify(parseObject);
+  localStorage.setItem(cardId, stringTask);
 });
 
 
