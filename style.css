@@ -1,27 +1,151 @@
-@import 'reset.css';
-
-
-/*get rid of hr add border bottom to article*/
-html {
+* {
   font-size: 10px;
 }
 
-header{
+header {
+  background-color: #6D6E71;
   font-family: 'Roboto Slab', serif;
   text-align: center;
-  background-color: #E5F3F2;
 }
 
 h1 {
+  color: #FFFFFF;
   font-size: 8rem;
-  color: #00A79D;
   padding: 4rem;
 }
 
-h3 {
+.logo-style {
+  color: #00A79D;
+}
+
+.input-boxes {
+  border: solid #939598 .1rem;
+  font-size: 3rem;
+  height: 4.5rem;
+  letter-spacing: .05rem;
+  margin: 1rem;
+  outline: none;
+  padding-left: 1rem; 
+  width: 60%;
+}
+
+.input-boxes::placeholder {
+    color: #939598;
+}
+
+#save-btn {
+  background-color: #00A79D;
+  border-radius: 0;
+  color: #FFFFFF;
+  height: 4rem;
+  margin-bottom: 3rem;
+  outline: none;
+  width: 61%;
+}
+
+#save-btn:hover {
+  background-color: #045E55;
+}
+
+#search-field {
+  border: solid #939598 .1rem;
+  font-size: 3rem;
+  height: 5rem;
+  letter-spacing: .05rem;
+  margin: 3rem 0;
+  outline: none;
+  padding-left: 1rem;
+  width: 100%;
+}
+
+#search-field::placeholder {
+  color: #939598;
+}
+
+.filter-buttons {
+  text-align: center;
+}
+
+.filter-quality {
+  border: solid 3px #6D6E71;
+  cursor: pointer;
+  font-size: 2.5rem;
+  letter-spacing: .05rem;
+  margin: 0 30px;
+  outline: none;
+  padding: .25rem 0;
+  width: 10rem;
+}
+
+.critical-btn {
+  background-color: #B65159;
+}
+
+.critical-btn:hover {
+  background-color: #952E36;
+}
+
+.high-btn {
+  background-color: #c18d41;
+}
+
+.high-btn:hover {
+  background-color: #A26E23;-
+}
+
+.normal-btn {
+ background-color:#F9D790;  
+}
+
+.normal-btn:hover {
+background-color: #D1AB59;
+}
+
+.low-btn {
+  background-color: #c4dfb6;
+}
+
+.low-btn:hover {
+  background-color: #9AC185;
+}
+
+.none-btn {
+  background-color: #BEDCE7;
+}
+
+.none-btn:hover {
+  background-color: #8EBACB;
+}
+
+.body {
+  font-family: 'Roboto Slab', serif;
+  margin: auto;
+  position: relative; 
+  width: 61%;
+}
+
+.cards {
+  font-family: 'Open Sans', sans-serif;
+  border-bottom: solid #d1d3d4;
+  margin-top: 1rem;
+}
+
+.top-card {
+  color: #6d6e71;
   font-size: 5rem;
   font-family: 'Roboto Slab', serif;
-  color: #6d6e71;
+  display: inline-block;
+  margin: 2rem auto;
+}
+
+#delete-btn {
+  background-image: url('images/delete.svg');
+  position: absolute;
+  right: 0px;
+}
+
+#delete-btn:hover {
+  background-image: url('images/delete-hover.svg');
 }
 
 h6 {
@@ -32,117 +156,75 @@ h6 {
 p {
   color: #939598;
   font-size: 3rem;
-  margin-bottom: 3rem;
   line-height: 3.4rem;
-}
-
-.logo-style {
-  color: #6D6E71;
-}
-
-.input-boxes {
-  width: 60%;
-  height: 5rem;
-  letter-spacing: .05rem;
-  margin: 1rem;
-  padding-left: 1rem; 
-  border: solid #939598 .1rem;
-  font-size: 3rem;
-}
-
-.input-boxes::placeholder {
-    color: #939598;
-}
-
-#save-btn {
-  background-color: #00A79D;
-  color: #FFF;
-  border-radius: 0;
-  width: 60.5%;
   margin-bottom: 3rem;
-  letter-spacing: .05rem;
 }
 
-#save-btn:hover {
-	background-color: #045E55;
-}
-
-.body {
-  width: 61%;
-  margin: auto;
-  font-family: 'Roboto Slab', serif;
-}
-
-#search-field {
-  letter-spacing: .05rem;
-  height: 5rem;
-  margin: 3rem 0;
-  padding-left: 1rem;
-  font-size: 3rem;
-  width: 100%;
-  border: solid #939598 .1rem;
-}
-
-#search-field::placeholder {
-  color: #939598;
-}
-.cards {
-  font-family: 'Open Sans', sans-serif;
-}
-#delete-btn {
-  float: right;
-  width: 3.5rem;
+.card-button {
+  border: none;
   height: 3.5rem;
-  background-image: url('images/delete.svg');
-  background-repeat: no-repeat;
-}
-
-#delete-btn:hover {
-  background-image: url('images/delete-hover.svg');
+  width: 3.5rem;
+  outline: none;
 }
 
 #upvote-btn {
-  width: 3.5rem;
-  height: 3.5rem;
   background-image: url('images/upvote.svg');
-  background-repeat: no-repeat;
+  /*background-repeat: no-repeat;*/
   margin-right: 3rem;
 }
+
 #upvote-btn:hover {
  background-image: url('images/upvote-hover.svg');
 }
 
 #downvote-btn {
-  width: 3.5rem;
-  height: 3.5rem;
   background-image: url('images/downvote.svg');
-  background-repeat: no-repeat;
+  /*background-repeat: no-repeat;*/
   margin-right: 3rem;
 }
+
 #downvote-btn:hover {
   background-image: url('images/downvote-hover.svg');
-}
-.top-card {
-  display: inline-block;
-  margin: 2rem auto;
-}
-img {
-  width: 2rem;
-  height: 2rem;
-}
-
-.card-button{
-  border: none;
 }
 
 .bottom-line {
   display: inline-block;
   vertical-align: middle;
+  margin-bottom: 3rem;
 }
 
-hr {
-  margin-top: 3rem;
-  border-color: #d1d3d4;
+.completed-btn {
+  background-color: #D2D3D4;
+  border: 3px solid #00A79D;
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  font-size: 2.5rem;
+  padding: .25rem 1rem;
+}
+
+.bottom-btns {
+  position: relative;
+  margin: 40px 0;
+}
+
+.bottom-btn {
+  background-color: #D2D3D4;
+  border: 3px solid #00A79D;
+  cursor: pointer;
+  font-size: 2.5rem;
+  outline: none;
+  padding: 5px 10px;
+  width: 48%;
+}
+
+.more-tasks {
+  margin-right: 3rem;
+  position: relative;
+}
+
+.completed-tasks {
+  position: absolute;
 }
 
 @media screen and (max-width: 1600px) {
@@ -153,17 +235,16 @@ hr {
 }
 
 @media screen and (max-width: 1100px) {
-
   h1 {
     font-size: 7.5rem;
   }
 }
 
 @media screen and (max-width: 750px) {
-
   h1 {
     font-size: 7rem;
   }
+
   h3 {
     font-size: 4.5rem;
   }
@@ -179,14 +260,12 @@ hr {
   #delete-btn,
   #downvote-btn,
   #upvote-btn {
-    width: 3rem;
     height: 3rem;
+    width: 3rem;
   }
-
 }
 
 @media screen and (max-width: 650px) {
-
   h1 {
     font-size: 6rem;
     padding: 2.4rem;
@@ -202,8 +281,8 @@ hr {
   }
 
   #save-btn {
-    width: 82%;
     height: 6rem;
+    width: 82%;
   }
 
   .body {
@@ -212,7 +291,6 @@ hr {
 }
 
 @media screen and (max-width: 500px) {
-
   h1 {
     font-size: 5rem;
     padding: 1.8rem;
@@ -220,7 +298,6 @@ hr {
 }
 
 @media screen and (max-width: 400px) {
-
   h1 {
     font-size: 4rem;
     padding: 1.6rem;
@@ -234,16 +311,3 @@ hr {
     font-size: 2.4rem;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
