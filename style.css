@@ -9,9 +9,21 @@ header {
 }
 
 h1 {
-  color: #FFFFFF;
-  font-size: 8rem;
   padding: 4rem;
+  color: #FFFFFF;
+  font-size: 6rem;
+}
+
+h6 {
+  color: #6d6e71;
+  font-size: 1.7rem;
+}
+
+p {
+  margin-bottom: 3rem;
+  color: #939598;
+  font-size: 2rem;
+  line-height: 3.4rem; 
 }
 
 .logo-style {
@@ -19,14 +31,14 @@ h1 {
 }
 
 .input-boxes {
-  border: solid #939598 .1rem;
-  font-size: 3rem;
-  height: 4.5rem;
-  letter-spacing: .05rem;
+  height: 2.5rem;
+  width: 50%;
+  padding-left: 1rem;
   margin: 1rem;
-  outline: none;
-  padding-left: 1rem; 
-  width: 60%;
+  border: solid #939598 .1rem;
+  font-size: 1.5rem;
+  letter-spacing: .05rem;
+  outline: none;  
 }
 
 .input-boxes::placeholder {
@@ -34,13 +46,13 @@ h1 {
 }
 
 #save-btn {
+  height: 2.5rem;
+  width: 51.5%;
+  margin-bottom: 3rem;
   background-color: #00A79D;
   border-radius: 0;
   color: #FFFFFF;
-  height: 4rem;
-  margin-bottom: 3rem;
   outline: none;
-  width: 61%;
 }
 
 #save-btn:hover {
@@ -48,14 +60,14 @@ h1 {
 }
 
 #search-field {
-  border: solid #939598 .1rem;
-  font-size: 3rem;
-  height: 5rem;
-  letter-spacing: .05rem;
-  margin: 3rem 0;
-  outline: none;
-  padding-left: 1rem;
-  width: 100%;
+    height: 2.5rem;
+    width: 85%;
+    padding-left: 1rem;
+    margin: 3rem 0 3rem 4rem;
+    border: solid #939598 .1rem;
+    font-size: 1.5rem;
+    letter-spacing: .05rem;
+    outline: none;
 }
 
 #search-field::placeholder {
@@ -67,14 +79,14 @@ h1 {
 }
 
 .filter-importance {
+  width: 8rem;
+  padding: 0.25rem 0;
+  margin: 0 0.75rem;
   border: solid 3px #6D6E71;
   cursor: pointer;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   letter-spacing: .05rem;
-  margin: 0 30px;
   outline: none;
-  padding: .25rem 0;
-  width: 10rem;
 }
 
 .critical-btn {
@@ -98,7 +110,7 @@ h1 {
 }
 
 .normal-btn:hover {
-background-color: #D1AB59;
+  background-color: #D1AB59;
 }
 
 .low-btn {
@@ -118,73 +130,25 @@ background-color: #D1AB59;
 }
 
 .body {
-  font-family: 'Roboto Slab', serif;
-  margin: auto;
   position: relative; 
   width: 61%;
+  margin: auto;
+  font-family: 'Roboto Slab', serif;
 }
 
 .cards {
+  width: 85%;
+  margin: 1rem 0 0 4rem;
   font-family: 'Open Sans', sans-serif;
   border-bottom: solid #d1d3d4;
-  margin-top: 1rem;
 }
 
 .top-card {
-  color: #6d6e71;
-  font-size: 5rem;
-  font-family: 'Roboto Slab', serif;
   display: inline-block;
   margin: 2rem auto;
-}
-
-#delete-btn {
-  background-image: url('images/delete.svg');
-  position: absolute;
-  right: 0px;
-}
-
-#delete-btn:hover {
-  background-image: url('images/delete-hover.svg');
-}
-
-h6 {
   color: #6d6e71;
-  font-size: 2.2rem;
-}
-
-p {
-  color: #939598;
   font-size: 3rem;
-  line-height: 3.4rem;
-  margin-bottom: 3rem;
-}
-
-.card-button {
-  border-radius: 100%;
-  height: 3.5rem;
-  width: 3.5rem;
-  outline: none;
-}
-
-#upvote-btn {
-  background-image: url('images/upvote.svg');
-  /*background-repeat: no-repeat;*/
-  margin-right: 3rem;
-}
-
-#upvote-btn:hover {
- background-image: url('images/upvote-hover.svg');
-}
-
-#downvote-btn {
-  background-image: url('images/downvote.svg');
-  /*background-repeat: no-repeat;*/
-  margin-right: 3rem;
-}
-
-#downvote-btn:hover {
-  background-image: url('images/downvote-hover.svg');
+  font-family: 'Roboto Slab', serif;
 }
 
 .bottom-line {
@@ -193,14 +157,61 @@ p {
   margin-bottom: 3rem;
 }
 
+#delete-btn,
+#upvote-btn,
+#downvote-btn {
+    height: 2.5rem;
+    width: 2.5rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+#delete-btn {
+  position: absolute;
+  right: 5rem;
+  background-image: url('images/delete.svg');
+}
+
+#delete-btn:hover {
+  background-image: url('images/delete-hover.svg');
+}
+
+#upvote-btn {
+  margin-right: 1rem;
+  background-image: url('images/upvote.svg');
+}
+
+#upvote-btn:hover {
+ background-image: url('images/upvote-hover.svg');
+}
+
+#downvote-btn {
+  margin-right: 3rem;
+  background-image: url('images/downvote.svg');
+ 
+}
+
+#downvote-btn:hover {
+  background-image: url('images/downvote-hover.svg');
+}
+
+.card-button {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 100%;
+  outline: none;
+}
+
+
 .completed-btn {
+  position: absolute;
+  right: 5rem;
+  padding: .25rem 1rem;
   background-color: #D2D3D4;
   border: 3px solid #00A79D;
   cursor: pointer;
-  position: absolute;
-  right: 0px;
-  font-size: 2.5rem;
-  padding: .25rem 1rem;
+  font-size: 1.5rem;
 }
 
 .bottom-btns {
@@ -209,18 +220,19 @@ p {
 }
 
 .bottom-btn {
+  width: 40%;
+  padding: 5px 10px;
   background-color: #D2D3D4;
   border: 3px solid #00A79D;
   cursor: pointer;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   outline: none;
-  padding: 5px 10px;
-  width: 48%;
 }
 
 .more-tasks {
-  margin-right: 3rem;
   position: relative;
+  margin-left: 4rem;
+  margin-right: 3rem;
 }
 
 .completed-tasks {
@@ -242,7 +254,7 @@ p {
 @media screen and (max-width: 1600px) {
 
   #save-btn {
-    width: 61%;
+    width: 51.5%;
   }
 }
 
