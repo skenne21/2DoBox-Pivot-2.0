@@ -202,6 +202,7 @@ function completedValue() {
   };
 };
 
+
 function showCompleted() {
   $('.cards').addClass('hidden');
   for(var i = 0; i < localStorage.length; i++){
