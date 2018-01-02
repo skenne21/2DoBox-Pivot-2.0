@@ -141,7 +141,7 @@ function changeImportanceText(parsedObject, htmlText, key) {
 };
 
 function filterImportance() {
- $('.cards').addClass('hidden')
+ $('.cards').addClass('hidden'); 
  var importanceText = $(this).text();
  for (i = 0 ; i < localStorage.length; i++) {
   var retrieveCard = localStorage.getItem(localStorage.key(i));
