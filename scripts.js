@@ -191,29 +191,34 @@ function toggleCompletedAppearance() {
 
 function completedValue() {
   var cardId = $(this).parent().attr('id');
+  console.log('card: ', $(this).parent())
   var storedId = localStorage.getItem(cardId);
   var parsedObject = JSON.parse(storedId);
   if($(this).closest('article').hasClass('completed-card') === true) {
     parsedObject.completed = true;
     storeCard(parsedObject);
   } else {
+    console.log('else statemetn')
     parsedObject.completed = false;
     storeCard(parsedObject);
   };
 };
 
-
 function showCompleted() {
+  var card = ($(this).closest('main').children('.append-here').find('article'));
+  console.log(card);
   $('.cards').addClass('hidden');
-  for(var i = 0; i < localStorage.length; i++){
+  for(var i = 0; i < localStorage.length; i++) {
     var retrieveCard = localStorage.getItem(localStorage.key(i));
     var parsedCard = JSON.parse(retrieveCard);
-    if(parsedCard.completed === true) {
-    // $('.cards').toggleClass('.completed-card');
-    var refreshCard = new NewCard (parsedCard.title, parsedCard.task, parsedCard.id, parsedCard.importance);
-    refreshCard.prependCard();
+    if(parsedCard.completed === true)  {
+      
+      $(parsedCard).addClass('completed-card');
+    }
+      var $retrievedCard = $('#cardId');
+      var refreshCard = new NewCard (parsedCard.title, parsedCard.task, parsedCard.id, parsedCard.importance);
+      refreshCard.prependCard();
     };
-  };
-};
+  }; 
 
 
