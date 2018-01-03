@@ -9,7 +9,7 @@ $('.append-here').on('blur', 'h3', editTitle);
 $('#search-field').on('keyup', searchCards)
 $('.append-here').on('click', '.completed-btn', toggleCompletedAppearance);
 $('.append-here').on('click', '.completed-btn', completedValue);
-$('.completed-tasks').on('click', showCompleted);
+$('.completed-tasks').on('click', refreshSecondaryFunction);
 $('.more-tasks').on('click', getCardFromStoreage);
 $('.critical-btn').on('click', filterImportance);
 $('.high-btn').on('click', filterImportance);
@@ -204,21 +204,26 @@ function completedValue() {
   };
 };
 
-function showCompleted() {
-  var card = ($(this).closest('main').children('.append-here').find('article'));
-  console.log(card);
+ function refreshSecondaryFunction() {
+  $(document).ready(reloadCards);
+ }
+
+function reloadCards() {
+  for (var i = 0; i <localStorage.length; i++) {
+    var pulledObject = localStorage.getItem(localStorage.key(i));
+    var parsedObject = JSON.parse(pulledObject);
+    var refreshCard = new NewCard (parsedObject.title, parsedObject.task, parsedObject.id, parsedObject.importance); 
+    refreshCard.prependCard();
+    showCompleted(parsedObject);
+  }
+}
+
+function showCompleted(parsedObject) {
   $('.cards').addClass('hidden');
-  for(var i = 0; i < localStorage.length; i++) {
-    var retrieveCard = localStorage.getItem(localStorage.key(i));
-    var parsedCard = JSON.parse(retrieveCard);
-    if(parsedCard.completed === true)  {
-      
-      $(parsedCard).addClass('completed-card');
-    }
-      var $retrievedCard = $('#cardId');
-      var refreshCard = new NewCard (parsedCard.title, parsedCard.task, parsedCard.id, parsedCard.importance);
-      refreshCard.prependCard();
-    };
-  }; 
-
-
+  if(parsedObject.completed === true) {
+    var cardId = '#' + parsedObject.id;
+    $(cardId).show();
+    $(cardId).addClass('completed-card');
+    $(cardId).find('button').toggleClass('completed-card-buttons');
+  }
+}
