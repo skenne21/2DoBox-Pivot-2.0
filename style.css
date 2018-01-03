@@ -20,7 +20,7 @@ h6 {
 }
 
 p {
-  margin-bottom: 3rem;
+  margin: 1.5rem 0 3rem 1rem;
   color: #939598;
   font-size: 2rem;
   line-height: 3.4rem; 
@@ -43,35 +43,6 @@ p {
 
 .input-boxes::placeholder {
     color: #939598;
-}
-
-#save-btn {
-  height: 2.5rem;
-  width: 51.5%;
-  margin-bottom: 3rem;
-  background-color: #00A79D;
-  border-radius: 0;
-  color: #FFFFFF;
-  outline: none;
-}
-
-#save-btn:hover {
-  background-color: #045E55;
-}
-
-#search-field {
-    height: 2.5rem;
-    width: 85%;
-    padding-left: 1rem;
-    margin: 3rem 0 3rem 4rem;
-    border: solid #939598 .1rem;
-    font-size: 1.5rem;
-    letter-spacing: .05rem;
-    outline: none;
-}
-
-#search-field::placeholder {
-  color: #939598;
 }
 
 .filter-buttons {
@@ -151,10 +122,43 @@ p {
   font-family: 'Roboto Slab', serif;
 }
 
+#card-title {
+  margin: 1.5rem 0 2rem 1rem;
+}
+
 .bottom-line {
   display: inline-block;
   vertical-align: middle;
   margin-bottom: 3rem;
+}
+
+#save-btn {
+  height: 2.5rem;
+  width: 51.5%;
+  margin-bottom: 3rem;
+  background-color: #00A79D;
+  border-radius: 0;
+  color: #FFFFFF;
+  outline: none;
+}
+
+#save-btn:hover {
+  background-color: #045E55;
+}
+
+#search-field {
+    height: 2.5rem;
+    width: 85%;
+    padding-left: 1rem;
+    margin: 3rem 0 3rem 4rem;
+    border: solid #939598 .1rem;
+    font-size: 1.5rem;
+    letter-spacing: .05rem;
+    outline: none;
+}
+
+#search-field::placeholder {
+  color: #939598;
 }
 
 #delete-btn,
@@ -179,6 +183,7 @@ p {
 
 #upvote-btn {
   margin-right: 1rem;
+  margin-left: 1rem;
   background-image: url('images/upvote.svg');
 }
 
@@ -240,7 +245,7 @@ p {
 }
 
 .hidden {
-  display: none
+  display: none;
 }
 
 .completed-card {
@@ -261,15 +266,6 @@ p {
     right: 7.3rem;
   }
 
-  #delete-btn {
-    right: 7.3rem;
-  }
-
-  #search-field {
-    width: 79%;
-    margin: 3rem 0 3rem 7.1rem;
-  }
-
   .input-boxes {
     width: 47.5%;
     margin-right: 1.5rem;
@@ -278,6 +274,15 @@ p {
   #save-btn {
     width: 48.5%;
     margin-right: 1.5rem;
+  }
+
+  #delete-btn {
+    right: 7.3rem;
+  }
+
+  #search-field {
+    width: 79%;
+    margin: 3rem 0 3rem 7.1rem;
   }
 }
 
@@ -295,7 +300,11 @@ p {
   }
 }
 
-@media screen and (max-width: 1300px ){
+@media screen and (max-width: 1300px) {
+  h6 {
+    font-size: 1.3rem;
+  }
+
   .filter-importance {
     width: 11rem;
     margin: 10px 0.75rem;;
@@ -303,19 +312,19 @@ p {
 
   .completed-btn {
     position: absolute;
-    right: .5rem;
+    right: 4.5rem;
   }
 
   #delete-btn {
-    right: .5rem;
+    right: 4.5rem;
   }
 
   .cards {
-    width: 95%;
+    width: 85%;
   }
 }
 
-@media screen and (max-width: 1200px ){
+@media screen and (max-width: 1200px) {
   h6 {
     font-size: 1.2rem;
   }
@@ -328,6 +337,10 @@ p {
   .cards {
     width: 95%;
   }
+
+  .bottom-btn {
+    font-size: 1rem;
+  }
 }
 
 @media screen and (max-width: 1030px) {
@@ -338,93 +351,90 @@ p {
   .completed-btn {
     font-size: .8rem;
     padding: .25rem .5rem;
-
   }
 }
 
-@media screen and (max-width: 900px) {
-  h6 {
-    position: relative;
-    right: 40px;
-    font-size: 1.1rem;
+@media screen and (max-width: 950px) {
+  body {
+    margin: 0;
   }
 
-  .filter-btns {
-    position: relative;
-    left: 0.5rem;
+  html {
+    width: 100%;
+  }
+
+  h6 {
+    font-size: 0.95rem;
+  }
+
+  .body {
+    width: 100%;
+    margin: 0;
   }
 
   .completed-btn {
+    font-size: 0.95rem;
     position: absolute;
-    right: -20px;
-    font-size: 1.1rem;
+    right: 6rem;
+   }
+
+  .input-boxes {
+    width: 75%;
   }
 
-  .bottom-btn {
-    font-size: 1.1rem;
+  .cards {
+   margin-left: 2rem;
+   width: 90%;
   }
+ 
+  #delete-btn,
+  #upvote-btn,
+  #downvote-btn {
+    height: 2rem;
+    width: 2rem;
+   }
 
   #delete-btn {
     position: absolute;
-    right: 1rem;
+    right: 6rem;
   }
-
-  #search-field{
-    margin: 3rem 0 3rem 2rem;
-  }
-
+  
   #save-btn {
-    margin-left: 1rem;
+    width: 76.5%;
   }
   
-  .more-tasks {
-    margin-left: 5rem;
-  }
-}
-
-@media screen and (max-width: 850px){
- h6 {
-  font-size: 0.95rem;
- }
-
- .completed-btn {
-  font-size: 0.95rem;
- }
-
- #delete-btn,
- #upvote-btn,
- #downvote-btn {
-  height: 2rem;
-  width: 2rem;
- }
-
- .input-boxes {
-  width: 75%;
- }
-
- #save-btn {
-  width: 76.5%;
- }
-  
- #search-field {
-  width: 122%;
-  margin: 2rem 0 3rem -3rem;
- } 
-
+  #search-field {
+    width: 90%;
+    margin: 2rem 0 3rem 3rem;
+  } 
 }
 
 @media screen and (max-width: 733px) {
+  h6 {
+    font-size: 1.5rem;
+  }
+
   .cards {
-   margin-left: 0;
-   width: 110%;
+    position: relative;
   }
 
   .filter-importance {
-    width: 6rem;
+    width: 90%;
+    margin-left: 2rem; 
   }
 
   .completed-btn {
-    right: -2rem;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+ .bottom-btn {
+  font-size: .9rem;
+ }
+
+  .more-tasks {
+    margin-left: 2rem;
   }
 
   #delete-btn,
@@ -434,12 +444,62 @@ p {
     width: 1.9rem;
  }
 
- #delete-btn {
-  right: -2rem;
- }
+  #delete-btn {
+    position: absolute;
+    right: 1rem;
+  }
 }
 
+@media screen and (max-width: 350px) {
+  header {
+    width: 110%;
+  }
 
+  h1 {
+    font-size: 3.5rem;
+  }
 
+  .bottom-btns {
+    position: relative;
+    right: 2.5rem;
+  }
+
+  .bottom-btn {
+    width: 45%;
+  }
+
+  .more-tasks {
+    margin-left: 3rem;
+  }
+
+  .completed-tasks {
+    margin-right: 2rem;
+  }
+
+ .completed-btn {
+    position: absolute;
+    right: 6rem;
+    bottom: .5rem
+  }
+  
+  #delete-btn,
+  #upvote-btn,
+  #downvote-btn {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  #upvote-btn,
+  #downvote-btn {
+    margin-bottom: 0.5rem;
+    margin-top: 3rem;
+  }
+
+  #search-field {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+  }
+
+}
 
 
