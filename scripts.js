@@ -4,8 +4,8 @@ $('.input-title').on('keyup', enableBtn);
 $('.append-here').on('click', '#delete-btn', removeCard);
 $('.append-here').on('click', '#upvote-btn', setImportance);
 $('.append-here').on('click', '#downvote-btn', setImportance);
-$('.append-here').on('blur', 'p', editTask);
-$('.append-here').on('blur', 'h3', editTitle);
+$('.append-here').on('blur', 'p', editCard);
+$('.append-here').on('blur', 'h3', editCard);
 $('#search-field').on('keyup', searchCards)
 $('.append-here').on('click', '.completed-btn', toggleCompletedAppearance);
 $('.append-here').on('click', '.completed-btn', completedValue);
@@ -39,7 +39,7 @@ function userData(event) {
 function enableBtn() {
   var titleInput = $('.input-title');
   var taskInput = $('.input-task');
-  if (titleInput.val()  && taskInput.val()){
+  if (titleInput.val()  && taskInput.val()) {
     $('#save-btn').attr('disabled', false);
   } else {
     $('#save-btn').text('Please Fill Out Both Inputs');
@@ -58,14 +58,14 @@ function secondaryFunctions(card) {
 
 function displayTen() {
   var newArray = [];  
-  for(var i = 0; i < localStorage.length; i++){
+  for(var i = 0; i < localStorage.length; i++) {
     newArray.push(localStorage.key(i));
     var sortedArray = newArray.sort(function(a, b) {
     return a - b;
   });
   var retrieveCard = localStorage.getItem(localStorage.key(i));
   var parsedCard = JSON.parse(retrieveCard);
-  if (newArray.length <= 10 && parsedCard.completed === false){
+  if (newArray.length <= 10 && parsedCard.completed === false) {
     var refreshCard = new NewCard (parsedCard.title, parsedCard.task, parsedCard.id, parsedCard.importance);
     refreshCard.prependCard();
     };
@@ -76,23 +76,32 @@ function storeCard(card) {
   var stringifiedCard = JSON.stringify(card);
   localStorage.setItem(card.id, stringifiedCard);
 };
+
+function retrieveCard() {
+  var objectArray = [];
+  for (var i = 0; i <localStorage.length; i++) {
+  var pulledObject = localStorage.getItem(localStorage.key(i));
+  var parsedObject = JSON.parse(pulledObject);
+  objectArray.push(parsedObject);
+ } 
+  return objectArray;
+}
   
 function getCardFromStoreage() {
   $('.cards').addClass('hidden');
-  for(var i = 0; i < localStorage.length; i++){
-  var retrieveCard = localStorage.getItem(localStorage.key(i));
-  var parsedCard = JSON.parse(retrieveCard);
-  if (parsedCard.completed === false) {
-    var refreshCard = new NewCard (parsedCard.title, parsedCard.task, parsedCard.id, parsedCard.importance);
+  var storeCards = retrieveCard();
+  storeCards.forEach(function(card) {
+  if (card.completed === false) {
+    var refreshCard = new NewCard (card.title, card.task, card.id, card.importance);
     refreshCard.prependCard();
     };
-  };
+  });
 };
 
 NewCard.prototype.prependCard = function() {
    $('.append-here').prepend(`<article class="cards" id="${this.id}">
     <button class="top-card card-button" id="delete-btn"></button>
-    <h3 class="top-card" contenteditable=true>${this.title}</h3>
+    <h3 class="top-card" id="card-title" contenteditable=true>${this.title}</h3>
     <p contenteditable=true>${this.task}</p>
     <button class="card-button bottom-line" id="upvote-btn"></button>
     <button class="card-button bottom-line" id="downvote-btn"></button>
@@ -100,7 +109,6 @@ NewCard.prototype.prependCard = function() {
     <button class="completed-btn">Mark as Completed</button>
     </article>`);
 };
-
 
 function removeCard() {
   var idRemoved = $(this).parent().attr('id');
@@ -129,7 +137,6 @@ function setImportanceCounter(e, parsedObject, htmlText, key) {
 };
 
 function changeImportanceText(parsedObject, htmlText, key) {
-  console.log(htmlText)
   var importanceArray = ['None', 'Low', 'Normal', 'High', 'Critical'];
   importanceArray.forEach(function(value, index) {
     if (parsedObject.importanceCounter  === index) {
@@ -143,62 +150,51 @@ function changeImportanceText(parsedObject, htmlText, key) {
 function filterImportance() {
  $('.cards').addClass('hidden'); 
  var importanceText = $(this).text();
- for (i = 0 ; i < localStorage.length; i++) {
-  var retrieveCard = localStorage.getItem(localStorage.key(i));
-  var parsedCard = JSON.parse(retrieveCard);
-  if (parsedCard.importance === importanceText) {
-      var cardId = '#' + parsedCard.id;
-      $(cardId).removeClass('hidden')
-    };
-  };
-};
- 
-function editTitle() {
-  var cardId = $(this).parent().attr('id');
-  var storedId = localStorage.getItem(cardId);
-  var parsedObject = JSON.parse(storedId);
-  var titleText = $(this).text();
-  parsedObject.title = titleText;
-  storeCard(parsedObject);
-};
-
-function editTask() {
-  var cardId = $(this).parent().attr('id');
-  var storedId = localStorage.getItem(cardId);
-  var parsedObject = JSON.parse(storedId);
-  var taskText = $(this).text();
-  parsedObject.task = taskText;
-  storeCard(parsedObject);
-};
-
-function searchCards() {
-  $('.cards').addClass('hidden');
-  for (var i = 0; i <localStorage.length; i++) {
-    var key = localStorage.key(i);
-    var pulledObject = localStorage.getItem(key);
-    var parsedObject = JSON.parse(pulledObject);
-    if (parsedObject.title.includes($(this).val()) || parsedObject.task.includes($(this).val())) {
-      var cardId = '#' + parsedObject.id;
+ var storeCards = retrieveCard();
+ storeCards.forEach(function(card) {
+  if (card.importance === importanceText) {
+      var cardId = '#' + card.id;
       $(cardId).removeClass('hidden');
     };
-  };
+  })
+};
+
+function editCard() {
+  var cardId = $(this).parent().attr('id');
+  var storedId = localStorage.getItem(cardId);
+  var parsedObject = JSON.parse(storedId);
+  var titleText = $(this).parent().find('h3').text();
+  var taskText = $(this).parent().find('p').text();
+  parsedObject.title = titleText;
+  parsedObject.task = taskText;
+  storeCard(parsedObject);
+}
+
+function searchCards() {
+  var searchText =$(this).val();
+  $('.cards').addClass('hidden');
+  var storeCards = retrieveCard();
+  storeCards.forEach(function(card) {
+    if (card.title.includes(searchText) || card.task.includes(searchText)) {
+      var cardId = '#' + card.id;
+      $(cardId).removeClass('hidden');
+    };
+  });
 };
 
 function toggleCompletedAppearance() {
   $(this).closest('article').toggleClass('completed-card');
   $(this).closest('article').find('button').toggleClass('completed-card-buttons');
- }
+ };
 
 function completedValue() {
   var cardId = $(this).parent().attr('id');
-  console.log('card: ', $(this).parent())
   var storedId = localStorage.getItem(cardId);
   var parsedObject = JSON.parse(storedId);
   if($(this).closest('article').hasClass('completed-card') === true) {
     parsedObject.completed = true;
     storeCard(parsedObject);
   } else {
-    console.log('else statemetn')
     parsedObject.completed = false;
     storeCard(parsedObject);
   };
@@ -206,17 +202,16 @@ function completedValue() {
 
  function refreshSecondaryFunction() {
   $(document).ready(reloadCards);
- }
+ };
 
 function reloadCards() {
-  for (var i = 0; i <localStorage.length; i++) {
-    var pulledObject = localStorage.getItem(localStorage.key(i));
-    var parsedObject = JSON.parse(pulledObject);
-    var refreshCard = new NewCard (parsedObject.title, parsedObject.task, parsedObject.id, parsedObject.importance); 
-    refreshCard.prependCard();
-    showCompleted(parsedObject);
-  }
-}
+  var storeCards = retrieveCard();
+  storeCards.forEach(function(card) {
+  var refreshCard = new NewCard (card.title, card.task, card.id, card.importance); 
+  refreshCard.prependCard();
+  showCompleted(card);
+   });
+  };
 
 function showCompleted(parsedObject) {
   $('.cards').addClass('hidden');
@@ -225,5 +220,5 @@ function showCompleted(parsedObject) {
     $(cardId).show();
     $(cardId).addClass('completed-card');
     $(cardId).find('button').toggleClass('completed-card-buttons');
-  }
-}
+  };
+};
